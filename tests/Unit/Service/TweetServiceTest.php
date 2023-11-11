@@ -6,12 +6,14 @@ use App\Services\TweetService;
 use PHPUnit\Framework\TestCase;
 // 252-08
 use Mockery;
+// 307-45
+use App\Modules\ImageUpload\ImageManagerInterface;
 
 class TweetServiceTest extends TestCase
 {
     /**
      * A basic unit test example.
-     * 
+     *
      * @runInSeparateProcess
      * @return void
      */
@@ -19,7 +21,11 @@ class TweetServiceTest extends TestCase
     // 249-04
     public function test_check_own_tweet()
     {
-        $tweetService = new TweetService(); // TweetServiceのインスタンスを作成
+        // 308-45
+        $imageManager = Mockery::mock(ImageManagerInterface::class);
+        // $tweetService = new TweetService(); // TweetServiceのインスタンスを作成
+        $tweetService = new TweetService($imageManager);
+
 
         // 252-08
         $mock = Mockery::mock('alias:App\Models\Tweet');
